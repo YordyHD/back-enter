@@ -37,6 +37,4 @@ public class Membreship {
     @Size(max = 255)
     @Column(name = "description", length = 255)
     private String description;
-
-
 }
