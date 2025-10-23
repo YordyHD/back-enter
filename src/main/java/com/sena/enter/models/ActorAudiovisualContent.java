@@ -1,42 +1,35 @@
 package com.sena.enter.models;
 
+
 import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "actor_audiovisual_content")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ActorAudiovisualContent implements Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
 
-    @Size(max = 30)
+    @EmbeddedId
+    private ActorAudiovisualContentId id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("actorId")
+    @JoinColumn(name = "actor_id")
+    private Actor actor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("audiovisualContentId")
+    @JoinColumn(name = "audiovisual_content_id")
+    private AudiovisualContent audiovisualContent;
+
     @Column(name = "actor_type", length = 30)
     private String actorType;
 
-    @Size(max = 20)
     @Column(name = "ender_character", length = 20)
-    private String character;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "views", "actorAudiovisualContents", "filmGenres" }, allowSetters = true)
-    private AudiovisualContent audiovisualContent;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "actorAudiovisualContents" }, allowSetters = true)
-    private Actor actor;
+    private Integer ordenAparicion;
 }
