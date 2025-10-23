@@ -4,12 +4,17 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
 @Table(name = "membreship")
-public class Membreship {
+public class Membreship implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,4 +42,8 @@ public class Membreship {
     @Size(max = 255)
     @Column(name = "description", length = 255)
     private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "membreship")
+    @JsonIgnoreProperties(value = { "bill", "membreship" }, allowSetters = true)
+    private Set<BillMembreship> billMembreships = new HashSet<>();
 }

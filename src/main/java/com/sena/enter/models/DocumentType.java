@@ -1,12 +1,18 @@
 package com.sena.enter.models;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "document_type")
-public class DocumentType {
+public class DocumentType implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +29,7 @@ public class DocumentType {
     @Column(name = "document_name", length = 100, nullable = false, unique = true)
     private String documentName;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "documentType")
+    @JsonIgnoreProperties(value = { "user", "bills", "views", "filmGenres", "documentType", "sex", "cities" }, allowSetters = true)
+    private Set<Customer> customers = new HashSet<>();
 }
