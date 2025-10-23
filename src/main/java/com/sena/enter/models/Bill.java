@@ -27,13 +27,13 @@ public class Bill implements Serializable{
     private Long id;
 
     @Column(name = "purchase_date")
-    private LocalDate purchaseDate;
+    private LocalDate purchaDate;
 
     @Column(name = "yeard")
-    private Integer yeard;
+    private Integer yea;
 
     @Column(name = "number_bill")
-    private Long numberBill;
+    private Long numBill;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
     @JsonIgnoreProperties(value = { "bill", "membreship" }, allowSetters = true)

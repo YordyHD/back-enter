@@ -27,7 +27,7 @@ public class Sex implements Serializable{
     private Long id;
 
     @Column(name = "sex_name", length = 40)
-    private String sexName;
+    private String sexN;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sex")
     @JsonIgnoreProperties(value = { "user", "bills", "views", "filmGenres", "documentType", "sex", "cities" }, allowSetters = true)

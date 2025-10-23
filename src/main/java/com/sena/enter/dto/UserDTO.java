@@ -19,7 +19,7 @@ public class UserDTO implements Serializable {
 
     public UserDTO(User user) {
         this.id = user.getId();
-        this.login = user.getLogin();
+        this.login = user.getLog();
     }
 }
 

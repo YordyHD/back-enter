@@ -24,24 +24,24 @@ public class Membreship implements Serializable{
     @NotNull
     @Size(max = 255)
     @Column(name = "membership_name", length = 255, nullable = false)
-    private String membershipName;
+    private String membershipN;
 
     @Column(name = "price", precision = 21, scale = 2)
-    private BigDecimal price;
+    private BigDecimal pri;
 
     @Column(name = "duration")
-    private Integer duration;
+    private Integer durat;
 
     @Lob
     @Column(name = "imagen")
-    private byte[] imagen;
+    private byte[] ima;
 
     @Column(name = "imagen_content_type")
-    private String imagenContentType;
+    private String imaContentType;
 
     @Size(max = 255)
     @Column(name = "description", length = 255)
-    private String description;
+    private String descrip;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "membreship")
     @JsonIgnoreProperties(value = { "bill", "membreship" }, allowSetters = true)

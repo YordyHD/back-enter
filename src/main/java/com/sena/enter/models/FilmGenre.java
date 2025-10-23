@@ -23,7 +23,7 @@ public class FilmGenre implements Serializable{
     @NotNull
     @Size(max = 30)
     @Column(name = "movie_genre", length = 30, nullable = false)
-    private String movieGenre;
+    private String movieGe;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "filmGenres")
     @JsonIgnoreProperties(value = { "views", "actorAudiovisualContents", "filmGenres" }, allowSetters = true)

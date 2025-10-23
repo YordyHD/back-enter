@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 
 public class ActorDTO implements Serializable{
 
-        private Long id;
+    private Long id;
 
     @Size(max = 30)
     private String nameActor;

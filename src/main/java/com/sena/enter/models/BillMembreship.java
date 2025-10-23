@@ -24,18 +24,18 @@ public class BillMembreship implements Serializable {
     private Long id;
 
     @Column(name = "final_date")
-    private LocalDate finalDate;
+    private LocalDate fiDate;
 
     @Column(name = "inicial_date")
-    private LocalDate inicialDate;
+    private LocalDate iniDate;
 
     @Column(name = "sale_price", precision = 21, scale = 2)
-    private BigDecimal salePrice;
+    private BigDecimal saleP;
     
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "billMembreships", "customer" }, allowSetters = true)
-    private Bill bill;
+    private Bill bi;
 
     @ManyToOne(optional = false)
     @NotNull

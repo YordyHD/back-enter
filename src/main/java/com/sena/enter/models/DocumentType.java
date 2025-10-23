@@ -22,12 +22,12 @@ public class DocumentType implements Serializable{
     @NotNull
     @Size(max = 10)
     @Column(name = "initials", length = 10, nullable = false, unique = true)
-    private String initials;
+    private String initi;
 
     @NotNull
     @Size(max = 100)
     @Column(name = "document_name", length = 100, nullable = false, unique = true)
-    private String documentName;
+    private String documentN;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "documentType")
     @JsonIgnoreProperties(value = { "user", "bills", "views", "filmGenres", "documentType", "sex", "cities" }, allowSetters = true)
