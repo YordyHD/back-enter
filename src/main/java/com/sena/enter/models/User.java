@@ -42,26 +42,26 @@ public class User implements Serializable{
     @Pattern(regexp = Constant.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     @Column(length = 50, unique = true, nullable = false)
-    private String login;
+    private String log;
 
     @JsonIgnore
     @NotNull
     @Size(min = 60, max = 60)
     @Column(name = "password_hash", length = 60, nullable = false)
-    private String password;
+    private String passw;
 
     @Size(max = 50)
     @Column(name = "first_name", length = 50)
-    private String firstName;
+    private String fName;
 
     @Size(max = 50)
     @Column(name = "last_name", length = 50)
-    private String lastName;
+    private String lName;
 
     @Email
     @Size(min = 5, max = 254)
     @Column(length = 254, unique = true)
-    private String email;
+    private String ema;
 
     @NotNull
     @Column(nullable = false)

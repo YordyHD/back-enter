@@ -19,7 +19,7 @@ public class Departament implements Serializable{
 
     @Size(max = 27)
     @Column(name = "departament_name", length = 27, unique = true)
-    private String departamentName;
+    private String departName;
     
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "departament")
     @JsonIgnoreProperties(value = { "customers", "departament" }, allowSetters = true)

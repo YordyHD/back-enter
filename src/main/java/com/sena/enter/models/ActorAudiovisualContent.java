@@ -28,12 +28,12 @@ public class ActorAudiovisualContent implements Serializable{
 
     @Size(max = 20)
     @Column(name = "ender_character", length = 20)
-    private String character;
+    private String charac;
 
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "views", "actorAudiovisualContents", "filmGenres" }, allowSetters = true)
-    private AudiovisualContent audiovisualContent;
+    private AudiovisualContent audiovisualCont;
 
     @ManyToOne(optional = false)
     @NotNull

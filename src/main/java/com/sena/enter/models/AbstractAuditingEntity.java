@@ -26,17 +26,17 @@ public abstract class AbstractAuditingEntity<T> implements Serializable {
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)
-    private String createdBy;
+    private String creBy;
 
     @CreatedDate
     @Column(name = "created_date", updatable = false)
-    private Instant createdDate = Instant.now();
+    private Instant creDate = Instant.now();
 
     @LastModifiedBy
     @Column(name = "last_modified_by", length = 50)
-    private String lastModifiedBy;
+    private String lastModifiBy;
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
-    private Instant lastModifiedDate = Instant.now();
+    private Instant lastModifiDate = Instant.now();
 }

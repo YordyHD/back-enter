@@ -32,12 +32,7 @@ public class City implements Serializable{
     @NotNull
     @Size(max = 200)
     @Column(name = "name", length = 200, nullable = false)
-    private String name;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "state_city", nullable = false)
-    private State stateCity;
+    private String n;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cities")
     @JsonIgnoreProperties(value = { "user", "bills", "views", "filmGenres", "documentType", "sex", "cities" }, allowSetters = true)

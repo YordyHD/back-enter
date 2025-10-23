@@ -22,25 +22,25 @@ public class Customer implements Serializable{
     @NotNull
     @Size(max = 50)
     @Column(name = "document_number", length = 50, nullable = false)
-    private String documentNumber;
+    private String documentNum;
 
     @NotNull
     @Size(max = 50)
     @Column(name = "first_name", length = 50, nullable = false)
-    private String firstName;
+    private String fName;
 
     @Size(max = 50)
     @Column(name = "second_name", length = 50)
-    private String secondName;
+    private String sName;
 
     @NotNull
     @Size(max = 50)
     @Column(name = "first_las_name", length = 50, nullable = false)
-    private String firstLasName;
+    private String fLName;
 
     @Size(max = 50)
     @Column(name = "second_last_name", length = 50)
-    private String secondLastName;
+    private String sLName;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull

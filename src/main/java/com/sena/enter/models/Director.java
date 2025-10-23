@@ -17,19 +17,19 @@ public class Director implements Serializable{
 
     @Size(max = 30)
     @Column(name = "name_director", length = 30)
-    private String nameDirector;
+    private String nDirector;
 
     @Size(max = 30)
     @Column(name = "las_name_director", length = 30)
-    private String lasNameDirector;
+    private String lNDirector;
 
     @Lob
     @Column(name = "picture")
-    private byte[] picture;
+    private byte[] pic;
 
     @Column(name = "picture_content_type")
-    private String pictureContentType;
+    private String picContentType;
 
     @Column(name = "yearbirth")
-    private LocalDate yearbirth;
+    private LocalDate year;
 }

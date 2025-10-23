@@ -27,18 +27,18 @@ public class Actor implements Serializable {
 
     @Size(max = 30)
     @Column(name = "name_actor", length = 30)
-    private String nameActor;
+    private String nActor;
 
     @Size(max = 30)
     @Column(name = "last_name_actor", length = 30)
-    private String lastNameActor;
+    private String lNActor;
 
     @Lob
     @Column(name = "picture")
-    private byte[] picture;
+    private byte[] pic;
 
     @Column(name = "picture_content_type")
-    private String pictureContentType;
+    private String picContentType;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "actor")
     @JsonIgnoreProperties(value = { "audiovisualContent", "actor" }, allowSetters = true)

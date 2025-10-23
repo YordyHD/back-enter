@@ -24,15 +24,15 @@ public class View implements Serializable{
     private Long id;
 
     @Column(name = "time_seen")
-    private Integer timeSeen;
+    private Integer tiSeen;
 
     @Column(name = "duration")
-    private Integer duration;
+    private Integer durat;
 
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "user", "bills", "views", "filmGenres", "documentType", "sex", "cities" }, allowSetters = true)
-    private Customer customer;
+    private Customer custo;
 
     @ManyToOne(optional = false)
     @NotNull

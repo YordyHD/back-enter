@@ -31,20 +31,20 @@ public class AudiovisualContent implements Serializable{
 
     @Size(max = 30)
     @Column(name = "tittle", length = 30)
-    private String tittle;
+    private String tit;
 
     @Column(name = "relase_date")
-    private LocalDate relaseDate;
+    private LocalDate relaDate;
 
     @Size(max = 100)
     @Column(name = "description", length = 100)
-    private String description;
+    private String descrip;
 
     @Column(name = "duration")
-    private Integer duration;
+    private Integer durat;
 
     @Column(name = "age_rating")
-    private Double ageRating;
+    private Double ageRati;
 
     @Size(max = 255)
     @Column(name = "trailer_url", length = 255)
@@ -52,10 +52,10 @@ public class AudiovisualContent implements Serializable{
 
     @Size(max = 30)
     @Column(name = "country_production", length = 30)
-    private String countryProduction;
+    private String countryProduc;
 
     @Column(name = "rating_promedy")
-    private Double ratingPromedy;
+    private Double ratPromedy;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "audiovisualContent")
     @JsonIgnoreProperties(value = { "customer", "audiovisualContent" }, allowSetters = true)
