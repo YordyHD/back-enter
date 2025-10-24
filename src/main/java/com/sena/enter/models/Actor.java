@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,7 +41,7 @@ public class Actor implements Serializable {
     @Column(name = "picture_content_type")
     private String picContentType;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "actor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = { "audiovisualContent", "actor" }, allowSetters = true)
     private Set<ActorAudiovisualContent> actorAudiovisualContents = new HashSet<>();
 }

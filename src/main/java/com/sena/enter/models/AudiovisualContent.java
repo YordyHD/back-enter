@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -61,7 +62,7 @@ public class AudiovisualContent implements Serializable{
     @JsonIgnoreProperties(value = { "customer", "audiovisualContent" }, allowSetters = true)
     private Set<View> views = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "audiovisualContent")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "audiovisualContent", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = { "audiovisualContent", "actor" }, allowSetters = true)
     private Set<ActorAudiovisualContent> actorAudiovisualContents = new HashSet<>();
 
