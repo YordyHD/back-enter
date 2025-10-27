@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActorAudiovisualContentId implements Serializable{
-    private Long ActorId;
-    private Long AudiovisualContent;
-}
+public class ActorAudiovisualContentId implements Serializable {
+    private Long actorId;
+    private Long audiovisualContentId;
+};

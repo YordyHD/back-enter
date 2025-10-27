@@ -1,7 +1,6 @@
 package com.sena.enter.models;
 
 import java.io.Serializable;
-import java.lang.Thread.State;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,8 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
