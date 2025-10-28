@@ -17,7 +17,11 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table (name = "actor")
 public class Actor implements Serializable {
@@ -28,18 +32,18 @@ public class Actor implements Serializable {
 
     @Size(max = 30)
     @Column(name = "name_actor", length = 30)
-    private String nActor;
+    private String nactor;
 
     @Size(max = 30)
     @Column(name = "last_name_actor", length = 30)
-    private String lNActor;
+    private String lnactor;
 
     @Lob
     @Column(name = "picture")
     private byte[] pic;
 
     @Column(name = "picture_content_type")
-    private String picContentType;
+    private String piccontenttype;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = { "audiovisualContent", "actor" }, allowSetters = true)
