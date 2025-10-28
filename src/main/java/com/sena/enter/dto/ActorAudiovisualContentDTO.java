@@ -1,7 +1,9 @@
 package com.sena.enter.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -12,21 +14,32 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
-
 public class ActorAudiovisualContentDTO implements Serializable{
 
-    private Long id;
+    @NotNull(message = "El ID del actor no puede ser nulo")
+    private Long actorId;
+    private String nombreActor; 
 
-    @Size(max = 30)
+    @NotNull(message = "El ID del contenido audiovisual no puede ser nulo")
+    private Long audiovisualContentId;
+    private String tituloContenido; 
+
+    @Size(max = 30, message = "El tipo de actor no puede superar los 30 caracteres")
     private String actorType;
 
-    @Size(max = 20)
+    @Size(max = 20, message = "El personaje no puede superar los 20 caracteres")
     private String character;
 
-    @NotNull
-    private AudiovisualContentDTO audiovisualContent;
+    @NotNull(message = "La fecha de participación es obligatoria")
+    private LocalDate fechaParticipacion;
 
-    @NotNull
-    private ActorDTO actor;
+    @Size(max = 500, message = "Las observaciones no pueden superar los 500 caracteres")
+    private String observaciones;
+
+    @Column(nullable = false, unique = true)
+    private String usuario;
+
+    @Column(nullable = false)
+    private String clave;
+
 }
