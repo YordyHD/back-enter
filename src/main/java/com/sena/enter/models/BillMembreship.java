@@ -35,7 +35,7 @@ public class BillMembreship implements Serializable {
     @MapsId("billId")
     @JoinColumn(name = "bill_id")
     @JsonIgnoreProperties(value = { "billMembreships", "customer" }, allowSetters = true)
-    private Bill bi;
+    private Bill bill;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("membreshipId")

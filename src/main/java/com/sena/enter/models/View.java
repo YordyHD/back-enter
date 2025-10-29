@@ -32,7 +32,7 @@ public class View implements Serializable{
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "user", "bills", "views", "filmGenres", "documentType", "sex", "cities" }, allowSetters = true)
-    private Customer custo;
+    private Customer customer;
 
     @ManyToOne(optional = false)
     @NotNull
