@@ -16,12 +16,14 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "bill_membreship")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class BillMembreship implements Serializable {
