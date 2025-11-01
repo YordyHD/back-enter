@@ -2,6 +2,8 @@ package com.sena.enter.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotNull;
@@ -33,5 +35,7 @@ public class MembreshipDTO implements Serializable{
 
     @Size(max = 255)
     private String description;
+
+    private Set<BillMembreshipDTO> billMembreships = new HashSet<>();
 
 }
