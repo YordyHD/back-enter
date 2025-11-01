@@ -5,10 +5,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import lombok.Setter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "departament")
 public class Departament implements Serializable{

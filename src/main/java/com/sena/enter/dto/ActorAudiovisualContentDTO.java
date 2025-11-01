@@ -17,6 +17,10 @@ import lombok.NoArgsConstructor;
 public class ActorAudiovisualContentDTO implements Serializable{
 
     private Long id;
+    
+    private Long actorId;
+
+    private Long audiovisualContentId;
 
     @Size(max = 30)
     private String actorType;
