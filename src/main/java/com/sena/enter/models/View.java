@@ -15,8 +15,9 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "view")
-
-public class View implements Serializable{
+@lombok.Getter
+@lombok.Setter
+public class View implements Serializable {
 
         @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
