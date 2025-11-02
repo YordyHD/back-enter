@@ -8,7 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 @Entity
 @Table (name = "ender_authority")
 public class Authority implements Serializable{
@@ -18,5 +23,6 @@ public class Authority implements Serializable{
     @Id
     @Column(name = "name", length = 50, nullable = false)
     private String name;
-
 }
+
+
