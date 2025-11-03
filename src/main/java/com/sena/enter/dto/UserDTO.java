@@ -3,7 +3,6 @@ package com.sena.enter.dto;
 import java.io.Serializable;
 import java.util.Set;
 import com.sena.enter.models.User;
-import com.sena.enter.models.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
