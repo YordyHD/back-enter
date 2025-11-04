@@ -6,6 +6,11 @@ import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "director")
 public class Director implements Serializable{
