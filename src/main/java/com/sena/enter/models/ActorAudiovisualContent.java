@@ -40,6 +40,4 @@ public class ActorAudiovisualContent implements Serializable {
     @Column(name = "ender_character", length = 20)
     private String charac;
 
-    @Column(name = "orden_aparicion")
-    private Integer ordenAparicion;
 }
