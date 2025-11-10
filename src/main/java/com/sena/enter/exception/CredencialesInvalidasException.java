@@ -1,0 +1,8 @@
+package com.sena.enter.exception;
+
+public class CredencialesInvalidasException extends RuntimeException {
+
+    public CredencialesInvalidasException(String mensaje) {
+        super(mensaje);
+    }
+}
