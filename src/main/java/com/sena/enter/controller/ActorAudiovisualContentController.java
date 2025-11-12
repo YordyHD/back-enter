@@ -55,7 +55,7 @@ public class ActorAudiovisualContentController {
                         .body(Map.of("mensaje", "Asociación no encontrada")));
     }
 
-    @PutMapping("/{actorId}/{contentId}")
+/*   @PutMapping("/{actorId}/{contentId}")
     public ResponseEntity<?> update(
             @PathVariable Long actorId,
             @PathVariable Long contentId,
@@ -72,7 +72,7 @@ public class ActorAudiovisualContentController {
                 "mensaje", "Asociación actualizada correctamente",
                 "data", updated
         ));
-    }
+    }*/
 
     @DeleteMapping("/{actorId}/{contentId}")
     public ResponseEntity<?> delete(@PathVariable Long actorId, @PathVariable Long contentId) {
