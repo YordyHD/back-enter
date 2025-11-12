@@ -82,12 +82,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     private boolean isValidCustomer(CustomerDTO customerDTO) {
         return customerDTO.getDocumentNumber() != null &&
-               customerDTO.getFirstName() != null &&
-               customerDTO.getFirstLasName() != null &&
-               customerDTO.getUser() != null &&
-               customerDTO.getDocumentType() != null &&
-               customerDTO.getSex() != null &&
-               customerDTO.getCities() != null &&
-               customerDTO.getFilmGenres() != null;
+                customerDTO.getFirstName() != null &&
+                customerDTO.getFirstLasName() != null &&
+                customerDTO.getUser() != null &&
+                customerDTO.getDocumentType() != null &&
+                customerDTO.getSex() != null &&
+                customerDTO.getCities() != null &&
+                customerDTO.getFilmGenres() != null;
     }
 }
