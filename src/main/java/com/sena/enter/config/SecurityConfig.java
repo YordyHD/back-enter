@@ -22,11 +22,14 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/api/autenticacion/**",
+                    "/api/customer/**",
+                    "/api/customer",
                     "/swagger-ui.html",
                     "/swagger-ui/**",
                     "/v3/api-docs",
                     "/v3/api-docs/**",
-                    "/swagger-resources/**"
+                    "/swagger-resources/**",
+                    "/api-docs/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             );
