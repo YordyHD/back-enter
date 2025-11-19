@@ -18,22 +18,40 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/api/autenticacion/**",
-                    "/api/customer/**",
-                    "/api/**",
-                    "/api/customer",
-                    "/swagger-ui.html",
-                    "/swagger-ui/**",
-                    "/v3/api-docs",
-                    "/v3/api-docs/**",
-                    "/swagger-resources/**",
-                    "/api-docs/**"
-                ).permitAll()
-                .anyRequest().authenticated()
-            );
+        .csrf(csrf -> csrf.disable())
+        .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+        .authorizeHttpRequests(auth -> auth
+        .requestMatchers(
+            "/api/autenticacion/**",
+            "/api/customer/**",
+            "/api/actors/create",
+            "/api/**",
+            "/api/customer",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/api-docs/**"
+        ).permitAll()
+        .anyRequest().authenticated()
+    );
+
+
+        //     .csrf(csrf -> csrf.disable())
+        //     .authorizeHttpRequests(auth -> auth
+        //         .requestMatchers(
+        //             "/api/autenticacion/**",
+        //             "/api/**",
+        //             "/swagger-ui.html",
+        //             "/swagger-ui/**",
+        //             "/v3/api-docs",
+        //             "/v3/api-docs/**",
+        //             "/swagger-resources/**",
+        //             "/api-docs/**"
+        //         ).permitAll()
+        //         .anyRequest().authenticated()
+        //     );
 
         return http.build();
 }

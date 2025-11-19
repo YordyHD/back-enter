@@ -29,11 +29,4 @@ public class FilmGenre implements Serializable{
     @Column(name = "movie_genre", length = 30, nullable = false)
     private String movieGe;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "filmGenres")
-    @JsonIgnoreProperties(value = { "views", "actorAudiovisualContents", "filmGenres" }, allowSetters = true)
-    private Set<AudiovisualContent> audiovisualContents = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "filmGenres")
-    @JsonIgnoreProperties(value = { "user", "bills", "views", "filmGenres", "documentType", "sex", "cities" }, allowSetters = true)
-    private Set<Customer> customers = new HashSet<>();
 }

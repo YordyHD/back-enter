@@ -1,8 +1,6 @@
 package com.sena.enter.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,9 +20,4 @@ public class FilmGenreDTO implements Serializable{
     @Size(max = 30)
     private String movieGenre;
 
-    @NotNull
-    private Set<AudiovisualContentDTO> audiovisualContents = new HashSet<>();
-
-    @NotNull
-    private Set<CustomerDTO> customers = new HashSet<>();
 }
