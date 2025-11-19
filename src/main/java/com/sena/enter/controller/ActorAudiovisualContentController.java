@@ -19,7 +19,7 @@ public class ActorAudiovisualContentController {
         this.actorAudiovisualContentService = actorAudiovisualContentService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody ActorAudiovisualContentDTO dto) {
         try {
             ActorAudiovisualContentDTO created = actorAudiovisualContentService.save(dto);
@@ -40,7 +40,7 @@ public class ActorAudiovisualContentController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<?> getAll() {
         List<ActorAudiovisualContentDTO> list = actorAudiovisualContentService.findAll();
         return ResponseEntity.ok(list);

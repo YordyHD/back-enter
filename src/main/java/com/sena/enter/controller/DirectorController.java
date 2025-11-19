@@ -25,7 +25,7 @@ public class DirectorController {
         this.directorService = directorService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<DirectorDTO> create(@RequestBody DirectorDTO directorDTO) {
         DirectorDTO saved = directorService.save(directorDTO);
         if (saved == null) {
@@ -53,7 +53,7 @@ public class DirectorController {
         return ResponseEntity.ok(director);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<List<DirectorDTO>> findAll() {
         List<DirectorDTO> directors = directorService.findAll();
         return ResponseEntity.ok(directors);

@@ -25,7 +25,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<CustomerDTO> create(@RequestBody CustomerDTO customerDTO) {
         CustomerDTO saved = customerService.save(customerDTO);
         if (saved == null) {
@@ -53,7 +53,7 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<List<CustomerDTO>> findAll() {
         List<CustomerDTO> customers = customerService.findAll();
         return ResponseEntity.ok(customers);

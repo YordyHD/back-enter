@@ -25,7 +25,7 @@ public class DepartamentController {
         this.departamentService = departamentService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<DepartamentDTO> create(@RequestBody DepartamentDTO departamentDTO) {
         DepartamentDTO saved = departamentService.save(departamentDTO);
         if (saved == null) {
@@ -53,7 +53,7 @@ public class DepartamentController {
         return ResponseEntity.ok(departament);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<List<DepartamentDTO>> findAll() {
         List<DepartamentDTO> departaments = departamentService.findAll();
         return ResponseEntity.ok(departaments);

@@ -28,7 +28,7 @@ public class ActorController {
         this.actorService = actorService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ActorDTO> createActor(@RequestBody ActorDTO actorDTO) {
         ActorDTO saved = actorService.save(actorDTO);
         return ResponseEntity.ok(saved);
@@ -48,7 +48,7 @@ public class ActorController {
                     .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<List<ActorDTO>> getAllActors() {
         List<ActorDTO> actores = actorService.findAll();
         return ResponseEntity.ok(actores);

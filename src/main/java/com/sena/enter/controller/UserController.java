@@ -26,7 +26,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
         try {
             UserDTO created = userService.save(userDTO);
@@ -47,7 +47,7 @@ public class UserController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<?> getAllUsers() {
         List<UserDTO> users = userService.findAll();
         return ResponseEntity.ok(users);

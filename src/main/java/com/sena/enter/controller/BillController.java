@@ -25,7 +25,7 @@ public class BillController {
         this.billService = billService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<BillDTO> create(@RequestBody BillDTO billDTO) {
         BillDTO saved = billService.save(billDTO);
         if (saved == null) {
@@ -53,7 +53,7 @@ public class BillController {
         return ResponseEntity.ok(bill);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<List<BillDTO>> findAll() {
         List<BillDTO> bills = billService.findAll();
         return ResponseEntity.ok(bills);

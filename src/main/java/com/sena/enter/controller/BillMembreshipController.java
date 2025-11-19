@@ -25,7 +25,7 @@ public class BillMembreshipController {
         this.billMembreshipService = billMembreshipService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<BillMembreshipDTO> create(@RequestBody BillMembreshipDTO dto) {
         BillMembreshipDTO saved = billMembreshipService.save(dto);
         if (saved == null) {
@@ -63,7 +63,7 @@ public class BillMembreshipController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     public ResponseEntity<List<BillMembreshipDTO>> getAll() {
         List<BillMembreshipDTO> list = billMembreshipService.findAll();
         return ResponseEntity.ok(list);

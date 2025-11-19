@@ -26,7 +26,7 @@ public class AudiovisualContentController {
         this.audiovisualContentService = audiovisualContentService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<AudiovisualContentDTO> createContent(@RequestBody AudiovisualContentDTO dto) {
         AudiovisualContentDTO saved = audiovisualContentService.save(dto);
         return ResponseEntity.ok(saved);
@@ -46,7 +46,7 @@ public class AudiovisualContentController {
                         .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<List<AudiovisualContentDTO>> getAllContents() {
         List<AudiovisualContentDTO> contents = audiovisualContentService.findAll();
         return ResponseEntity.ok(contents);

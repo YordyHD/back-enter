@@ -25,7 +25,7 @@ public class CityController {
         this.cityService = cityService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<CityDTO> create(@RequestBody CityDTO cityDTO) {
         CityDTO saved = cityService.save(cityDTO);
         if (saved == null) {
@@ -53,7 +53,7 @@ public class CityController {
         return ResponseEntity.ok(city);
     }
 
-    @GetMapping
+    @GetMapping("/findAll")
     public ResponseEntity<List<CityDTO>> findAll() {
         List<CityDTO> cities = cityService.findAll();
         return ResponseEntity.ok(cities);
