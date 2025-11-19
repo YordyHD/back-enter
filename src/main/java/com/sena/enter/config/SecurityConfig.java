@@ -3,6 +3,7 @@ package com.sena.enter.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,44 +17,48 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-        .csrf(csrf -> csrf.disable())
-        .headers(headers -> headers.frameOptions(frame -> frame.disable()))
-        .authorizeHttpRequests(auth -> auth
-        .requestMatchers(
-            "/api/autenticacion/**",
-            "/api/customer/**",
-            "/api/actors/create",
-            "/api/**",
-            "/api/customer",
-            "/swagger-ui.html",
-            "/swagger-ui/**",
-            "/v3/api-docs",
-            "/v3/api-docs/**",
-            "/swagger-resources/**",
-            "/api-docs/**"
-        ).permitAll()
-        .anyRequest().authenticated()
-    );
-
-
-        //     .csrf(csrf -> csrf.disable())
-        //     .authorizeHttpRequests(auth -> auth
-        //         .requestMatchers(
-        //             "/api/autenticacion/**",
-        //             "/api/**",
-        //             "/swagger-ui.html",
-        //             "/swagger-ui/**",
-        //             "/v3/api-docs",
-        //             "/v3/api-docs/**",
-        //             "/swagger-resources/**",
-        //             "/api-docs/**"
-        //         ).permitAll()
-        //         .anyRequest().authenticated()
-        //     );
+            .csrf(csrf -> csrf.disable())
+            .headers(headers -> 
+                headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
+            )
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/api/autenticacion/**",
+                    "/api/customer/**",
+                    "/api/actors/create",
+                    "/api/**",
+                    "/swagger-ui.html",
+                    "/swagger-ui/**",
+                    "/v3/api-docs",
+                    "/v3/api-docs/**",
+                    "/swagger-resources/**",
+                    "/api-docs/**"
+                ).permitAll()
+                .anyRequest().authenticated()
+            );
 
         return http.build();
+
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    //     http
+    //          .csrf(csrf -> csrf.disable())
+    //          .authorizeHttpRequests(auth -> auth
+    //              .requestMatchers(
+    //                  "/api/autenticacion/**",
+    //                  "/api/**",
+    //                  "/swagger-ui.html",
+    //                  "/swagger-ui/**",
+    //                  "/v3/api-docs",
+    //                  "/v3/api-docs/**",
+    //                  "/swagger-resources/**",
+    //                  "/api-docs/**"
+    //              ).permitAll()
+    //              .anyRequest().authenticated()
+    //          );
+
+    //     return http.build();
 }
 }
 

@@ -35,12 +35,4 @@ public class City implements Serializable{
     @Column(name = "name", length = 200, nullable = false)
     private String n;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cities")
-    @JsonIgnoreProperties(value = { "user", "bills", "views", "filmGenres", "documentType", "sex", "cities" }, allowSetters = true)
-    private Set<Customer> customers = new HashSet<>();
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "cities" }, allowSetters = true)
-    private Departament departament;
 }

@@ -20,6 +20,4 @@ public class CityDTO implements Serializable{
     @Size(max = 200)
     private String name;
 
-    @NotNull
-    private DepartamentDTO departament;
 }

@@ -25,7 +25,4 @@ public class Departament implements Serializable{
     @Column(name = "departament_name", length = 27, unique = true)
     private String departName;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "departament")
-    @JsonIgnoreProperties(value = { "customers", "departament" }, allowSetters = true)
-    private Set<City> cities = new HashSet<>();
 }
