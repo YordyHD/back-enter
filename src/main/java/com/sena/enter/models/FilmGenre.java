@@ -1,10 +1,7 @@
 package com.sena.enter.models;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
