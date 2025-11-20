@@ -75,8 +75,8 @@ public class User implements Serializable{
     @Column(name = "image_url", length = 256)
     private String imageUrl;
 
-    @Size(max = 20)
-    @Column(name = "activation_key", length = 20)
+    @Size(max = 36)
+    @Column(name = "activation_key", length = 36)
     @JsonIgnore
     private String activationKey;
 

@@ -22,6 +22,7 @@ public class UserDTO implements Serializable {
     private boolean activated;
     private String langKey;
     private String imageUrl;
+    private String password;
     private Set<String> authorities;
 
     public UserDTO(User user) {

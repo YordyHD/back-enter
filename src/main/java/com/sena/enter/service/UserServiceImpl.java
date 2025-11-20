@@ -50,7 +50,12 @@ public class UserServiceImpl implements UserService {
         
         user.setActivationKey(generateActivationKey());
         
-        String encryptedPassword = passwordEncoder.encode(generateTemporaryPassword());
+        String encryptedPassword;
+        if (userDTO.getPassword() != null && !userDTO.getPassword().isBlank()) {
+            encryptedPassword = passwordEncoder.encode(userDTO.getPassword());
+        } else {
+            encryptedPassword = passwordEncoder.encode(generateTemporaryPassword());
+        }
         user.setPassw(encryptedPassword);
 
 
