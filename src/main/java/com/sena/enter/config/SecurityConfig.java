@@ -17,10 +17,12 @@ public class SecurityConfig {
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
         var configuration = new org.springframework.web.cors.CorsConfiguration();
@@ -32,43 +34,36 @@ public class SecurityConfig {
         var source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
-}
+    }
 
     @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .headers(headers -> 
-                headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)
-            )
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/api/autenticacion/**",
-                    "/api/customer/**",
-                    "/api/auth/login",
-                    "/api/auth/**",
-                    "/api/users/**",
-                    // "/api/**",
-                    "/swagger-ui.html",
-                    "/swagger-ui/**",
-                    "/v3/api-docs",
-                    "/v3/api-docs/**",
-                    "/swagger-resources/**",
-                    "/api-docs/**",
-                    "/api/actors/**"
-                ).permitAll()
-                .anyRequest().authenticated()
-            );
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/api/autenticacion/**",
+                                "/api/auth/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/api-docs/**")
+                        .permitAll()
+                        .requestMatchers("/api/**").hasAuthority("ADMIN")
+                        .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-    
+
         return http.build();
 
-}
+    }
 }
 
 // Accede a Swagger UI
-//     Una vez que tu app esté corriendo, abre:
-//     http://localhost:8080/swagger-ui.html
+// Una vez que tu app esté corriendo, abre:
+// http://localhost:8080/swagger-ui.html
 
-// Para probar las imgenes poner esto "iVBORw0KGgoAAAANSUhEUgAAAPoAAAD6CAIAAAAHjs1qAAAQAElEQVR4Aey9a7QlyVUe+O0dmXnOuc96V1e3wGPW/PIv7JmxGRuNjARSA5JoIUsgDYv5AawBCRh7vHgYARKGtWwkWOO1WCx7xoDNIIwkHhIsEA8Z8R6QBZLQW+qu7uqurqqu6npX3XvOyYzYe77IvPd2"
+// Para probar las imgenes poner esto
+// "iVBORw0KGgoAAAANSUhEUgAAAPoAAAD6CAIAAAAHjs1qAAAQAElEQVR4Aey9a7QlyVUe+O0dmXnOuc96V1e3wGPW/PIv7JmxGRuNjARSA5JoIUsgDYv5AawBCRh7vHgYARKGtWwkWOO1WCx7xoDNIIwkHhIsEA8Z8R6QBZLQW+qu7uqurqqu6npX3XvOyYzYe77IvPd2"
