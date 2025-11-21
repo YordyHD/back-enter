@@ -7,6 +7,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sena.enter.dto.UserDTO;
 import com.sena.enter.models.User;
@@ -22,6 +27,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
+    @Autowired(required = false)
+    private JavaMailSender mailSender;
+    private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     public UserServiceImpl(
         UserRepository userRepository,
@@ -161,6 +169,50 @@ public class UserServiceImpl implements UserService {
 
     private String generateActivationKey() {
         return java.util.UUID.randomUUID().toString();
+    }
+
+    private String generateResetKey() {
+        String uuid = java.util.UUID.randomUUID().toString().replaceAll("-", "");
+        String key = uuid.substring(0, Math.min(20, uuid.length()));
+        return key.toUpperCase();
+    }
+
+    @Override
+    public Optional<String> requestPasswordReset(String email) {
+        return userRepository.findByEma(email.toLowerCase())
+            .filter(User::isActivated)
+            .map(user -> {
+                String resetKey = generateResetKey();
+                user.setResetKey(resetKey);
+                user.setResetDate(Instant.now());
+                userRepository.save(user);
+
+                if (mailSender == null) {
+                    log.warn("JavaMailSender bean no configurado. La clave de restablecimiento fue generada pero no enviada por correo: {} -> {}", user.getEma(), resetKey);
+                } else {
+                    try {
+                        log.debug("Enviando correo de restablecimiento a {}", user.getEma());
+                        SimpleMailMessage message = new SimpleMailMessage();
+                        message.setTo(user.getEma());
+                        message.setSubject("Restablecer contraseña");
+                        String resetUrl = "/api/users/reset-password?key=" + resetKey + "&newPassword=...";
+                        message.setText("Usa esta clave para restablecer la contraseña: " + resetKey + "\nEndpoint: " + resetUrl);
+                        mailSender.send(message);
+                        log.info("Correo de restablecimiento enviado a {}", user.getEma());
+                    } catch (Exception e) {
+                        log.error("Error al enviar correo de restablecimiento a {}: {}", user.getEma(), e.getMessage(), e);
+                    }
+                }
+
+                return resetKey;
+            });
+    }
+
+    @Override
+    public Optional<String> getActivationKeyByEmail(String email) {
+        return userRepository.findByEma(email.toLowerCase())
+            .map(user -> user.getActivationKey() != null && !user.getActivationKey().isBlank() ? user.getActivationKey() : null)
+            .filter(key -> key != null);
     }
 
     private String generateTemporaryPassword() {

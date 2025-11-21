@@ -37,9 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // 🔥 Endpoints sin token
         if (path.equals("/api/auth/login") ||
-            path.equals("/api/users/create") ||
+            path.equals("/api/users/**") ||
             path.startsWith("/swagger") ||
             path.startsWith("/v3/api-docs")) {
 

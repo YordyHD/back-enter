@@ -22,4 +22,8 @@ public interface UserService {
     Optional<UserDTO> activateRegistration(String key);
 
     boolean resetPassword(String key, String newPassword);
+
+    Optional<String> requestPasswordReset(String email);
+
+    Optional<String> getActivationKeyByEmail(String email);
 }

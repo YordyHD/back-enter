@@ -115,4 +115,36 @@ public class UserController {
                     .body(Map.of("mensaje", "Clave de restablecimiento inválida o expirada"));
         }
     }
+
+    @PostMapping("/request-password-reset")
+    public ResponseEntity<?> requestPasswordReset(@RequestParam String email) {
+        try {
+            java.util.Optional<String> maybeKey = userService.requestPasswordReset(email);
+            if (maybeKey.isPresent()) {
+                // For development, we include the key in the response. Remove in production.
+                return ResponseEntity.ok(Map.of(
+                        "mensaje", "Solicitud de restablecimiento creada",
+                        "resetKey", maybeKey.get()
+                ));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("mensaje", "Email no encontrado o usuario no activado"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of(
+                    "error", "No se pudo procesar la solicitud",
+                    "detalle", e.getMessage()
+            ));
+        }
+    }
+
+        @GetMapping("/activation-key")
+        public ResponseEntity<?> getActivationKey(@RequestParam String email) {
+        return userService.getActivationKeyByEmail(email)
+            .<ResponseEntity<?>>map(key -> ResponseEntity.ok(Map.of(
+                "activationKey", key
+            )))
+            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("mensaje", "Email no encontrado o sin clave de activación")));
+        }
 }
