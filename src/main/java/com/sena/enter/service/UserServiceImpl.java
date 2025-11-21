@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.sena.enter.dto.UserDTO;
 import com.sena.enter.models.User;
+import com.sena.enter.models.Authority;
 import com.sena.enter.repository.AuthorityRepository;
 import com.sena.enter.repository.UserRepository;
 
@@ -132,6 +133,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(Long id) {
         userRepository.findById(id).ifPresent(userRepository::delete);
+    }
+
+    @Override
+    public boolean addRoleToUser(Long userId, String role) {
+        return userRepository.findById(userId).map(user -> {
+            Authority authority = authorityRepository.findById(role)
+                .orElseGet(() -> {
+                    Authority a = new Authority();
+                    a.setName(role);
+                    return authorityRepository.save(a);
+                });
+            user.getAuthorities().add(authority);
+            userRepository.save(user);
+            return true;
+        }).orElse(false);
+    }
+
+    @Override
+    public boolean removeRoleFromUser(Long userId, String role) {
+        return userRepository.findById(userId).map(user -> {
+            user.getAuthorities().removeIf(a -> a.getName().equals(role));
+            userRepository.save(user);
+            return true;
+        }).orElse(false);
     }
 
     @Override

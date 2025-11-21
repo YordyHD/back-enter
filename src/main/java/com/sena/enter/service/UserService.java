@@ -26,4 +26,8 @@ public interface UserService {
     Optional<String> requestPasswordReset(String email);
 
     Optional<String> getActivationKeyByEmail(String email);
+
+    boolean addRoleToUser(Long userId, String role);
+
+    boolean removeRoleFromUser(Long userId, String role);
 }

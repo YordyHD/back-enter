@@ -147,4 +147,18 @@ public class UserController {
             .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Map.of("mensaje", "Email no encontrado o sin clave de activación")));
         }
+
+        @PostMapping("/{id}/roles")
+        public ResponseEntity<?> addRoleToUser(@PathVariable Long id, @RequestParam String role) {
+            boolean ok = userService.addRoleToUser(id, role);
+            if (ok) return ResponseEntity.ok(Map.of("mensaje", "Rol agregado"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("mensaje", "Usuario no encontrado"));
+        }
+
+        @DeleteMapping("/{id}/roles")
+        public ResponseEntity<?> removeRoleFromUser(@PathVariable Long id, @RequestParam String role) {
+            boolean ok = userService.removeRoleFromUser(id, role);
+            if (ok) return ResponseEntity.ok(Map.of("mensaje", "Rol removido"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("mensaje", "Usuario no encontrado"));
+        }
 }
