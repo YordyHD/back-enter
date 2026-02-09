@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.sena.enter.dto.CityDTO;
 import com.sena.enter.mapper.CityMapper;
 import com.sena.enter.models.City;
+import com.sena.enter.models.Departament;
 import com.sena.enter.repository.CityRepository;
+import com.sena.enter.repository.DepartamentRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -17,17 +19,27 @@ import jakarta.transaction.Transactional;
 public class CityServiceImpl implements CityService {
 
     private final CityRepository cityRepository;
+    private final DepartamentRepository departamentRepository;
     private final CityMapper cityMapper;
 
-    public CityServiceImpl(CityRepository cityRepository, CityMapper cityMapper) {
+    public CityServiceImpl(CityRepository cityRepository, DepartamentRepository departamentRepository,
+            CityMapper cityMapper) {
         this.cityRepository = cityRepository;
+        this.departamentRepository = departamentRepository;
         this.cityMapper = cityMapper;
     }
 
     @Override
     public CityDTO save(CityDTO cityDTO) {
-        if (cityDTO == null) return null;
+        if (cityDTO == null)
+            return null;
         City entity = cityMapper.toCity(cityDTO);
+
+        if (cityDTO.getDepartamentId() != null) {
+            Departament dep = departamentRepository.findById(cityDTO.getDepartamentId()).orElse(null);
+            entity.setDepartament(dep);
+        }
+
         City saved = cityRepository.save(entity);
         return cityMapper.toDto(saved);
     }
@@ -38,23 +50,30 @@ public class CityServiceImpl implements CityService {
             return save(cityDTO);
         }
         City entity = cityMapper.toCity(cityDTO);
+
+        if (cityDTO.getDepartamentId() != null) {
+            Departament dep = departamentRepository.findById(cityDTO.getDepartamentId()).orElse(null);
+            entity.setDepartament(dep);
+        }
+
         City saved = cityRepository.save(entity);
         return cityMapper.toDto(saved);
     }
 
     @Override
     public CityDTO findOne(Long id) {
-        if (id == null) return null;
+        if (id == null)
+            return null;
         return cityRepository.findById(id)
-            .map(cityMapper::toDto)
-            .orElse(null);
+                .map(cityMapper::toDto)
+                .orElse(null);
     }
 
     @Override
     public List<CityDTO> findAll() {
         return cityRepository.findAll().stream()
-            .map(cityMapper::toDto)
-            .collect(Collectors.toList());
+                .map(cityMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -2,11 +2,15 @@ package com.sena.enter.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -18,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "city")
-public class City implements Serializable{
+public class City implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -28,5 +32,11 @@ public class City implements Serializable{
     @Size(max = 200)
     @Column(name = "name", length = 200, nullable = false)
     private String n;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "departament_id", nullable = false)
+    @JsonIgnoreProperties(value = { "cities" }, allowSetters = true)
+    private Departament departament;
 
 }

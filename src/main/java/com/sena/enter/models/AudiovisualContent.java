@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -28,7 +29,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "audiovisual_content")
-public class AudiovisualContent implements Serializable{
+public class AudiovisualContent implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -62,6 +63,11 @@ public class AudiovisualContent implements Serializable{
     @Column(name = "rating_promedy")
     private Double ratPromedy;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "director_id")
+    @JsonIgnoreProperties(value = { "audiovisualContents" }, allowSetters = true)
+    private Director director;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "audiovisualContent")
     @JsonIgnoreProperties(value = { "customer", "audiovisualContent" }, allowSetters = true)
     private Set<View> views = new HashSet<>();
@@ -72,11 +78,7 @@ public class AudiovisualContent implements Serializable{
 
     @ManyToMany(fetch = FetchType.LAZY)
     @NotNull
-    @JoinTable(
-        name = "rel_audiovisual_content__film_genre",
-        joinColumns = @JoinColumn(name = "audiovisual_content_id"),
-        inverseJoinColumns = @JoinColumn(name = "film_genre_id")
-    )
+    @JoinTable(name = "rel_audiovisual_content__film_genre", joinColumns = @JoinColumn(name = "audiovisual_content_id"), inverseJoinColumns = @JoinColumn(name = "film_genre_id"))
     @JsonIgnoreProperties(value = { "audiovisualContents", "customers" }, allowSetters = true)
     private Set<FilmGenre> filmGenres = new HashSet<>();
 }

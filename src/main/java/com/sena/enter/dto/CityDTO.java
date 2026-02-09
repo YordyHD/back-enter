@@ -12,12 +12,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class CityDTO implements Serializable{
+public class CityDTO implements Serializable {
 
-        private Long id;
+    private Long id;
 
     @NotNull
     @Size(max = 200)
     private String name;
+
+    @NotNull
+    private Long departamentId;
+
+    private String departamentName;
 
 }

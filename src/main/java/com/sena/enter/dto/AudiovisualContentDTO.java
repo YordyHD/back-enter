@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class AudiovisualContentDTO implements Serializable{
+public class AudiovisualContentDTO implements Serializable {
 
-        private Long id;
+    private Long id;
 
     @Size(max = 30)
     private String tittle;
@@ -38,6 +38,10 @@ public class AudiovisualContentDTO implements Serializable{
     private String countryProduction;
 
     private Double ratingPromedy;
+
+    private Long directorId;
+
+    private String directorName;
 
     @NotNull
     private Set<FilmGenreDTO> filmGenres = new HashSet<>();

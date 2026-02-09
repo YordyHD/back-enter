@@ -11,11 +11,11 @@ import com.sena.enter.models.AudiovisualContent;
 import com.sena.enter.models.FilmGenre;
 
 @Component
-public class AudiovisualContentMapperImpl implements AudiovisualContentMapper{
+public class AudiovisualContentMapperImpl implements AudiovisualContentMapper {
 
   @Override
-  public AudiovisualContentDTO toDTO(AudiovisualContent audiovisualContent){
-    if (audiovisualContent == null){
+  public AudiovisualContentDTO toDTO(AudiovisualContent audiovisualContent) {
+    if (audiovisualContent == null) {
       return null;
     }
     AudiovisualContentDTO dto = new AudiovisualContentDTO();
@@ -28,10 +28,16 @@ public class AudiovisualContentMapperImpl implements AudiovisualContentMapper{
     dto.setTrailerURL(audiovisualContent.getTrailerURL());
     dto.setCountryProduction(audiovisualContent.getCountryProduc());
     dto.setRatingPromedy(audiovisualContent.getRatPromedy());
+    if (audiovisualContent.getDirector() != null) {
+      dto.setDirectorId(audiovisualContent.getDirector().getId());
+      dto.setDirectorName(
+          audiovisualContent.getDirector().getNDirector() + " " + audiovisualContent.getDirector().getLNDirector());
+    }
     if (audiovisualContent.getFilmGenres() != null) {
       Set<FilmGenreDTO> fgDtos = new HashSet<>();
       for (FilmGenre fg : audiovisualContent.getFilmGenres()) {
-        if (fg == null) continue;
+        if (fg == null)
+          continue;
         FilmGenreDTO fgDto = new FilmGenreDTO();
         fgDto.setId(fg.getId());
         fgDto.setMovieGenre(fg.getMovieGe());
@@ -43,9 +49,9 @@ public class AudiovisualContentMapperImpl implements AudiovisualContentMapper{
   }
 
   @Override
-public AudiovisualContent toAudiovisualContent(AudiovisualContentDTO dto) {
+  public AudiovisualContent toAudiovisualContent(AudiovisualContentDTO dto) {
     if (dto == null) {
-        return null;
+      return null;
     }
 
     AudiovisualContent audiovisualContent = new AudiovisualContent();
@@ -58,10 +64,18 @@ public AudiovisualContent toAudiovisualContent(AudiovisualContentDTO dto) {
     audiovisualContent.setTrailerURL(dto.getTrailerURL());
     audiovisualContent.setCountryProduc(dto.getCountryProduction());
     audiovisualContent.setRatPromedy(dto.getRatingPromedy());
+
+    // Director handling logic moved to Service to fetch full entity,
+    // but here we can set ID if we were using EntityManager reference (cleaner to
+    // do in service or use mapstruct correctly)
+    // For now we will rely on Service to set the actual Director entity based on
+    // ID.
+
     if (dto.getFilmGenres() != null) {
       Set<FilmGenre> fgs = new HashSet<>();
       for (FilmGenreDTO fgDto : dto.getFilmGenres()) {
-        if (fgDto == null) continue;
+        if (fgDto == null)
+          continue;
         FilmGenre fg = new FilmGenre();
         fg.setId(fgDto.getId());
         fg.setMovieGe(fgDto.getMovieGenre());
@@ -69,7 +83,7 @@ public AudiovisualContent toAudiovisualContent(AudiovisualContentDTO dto) {
       }
       audiovisualContent.setFilmGenres(fgs);
     }
-    
+
     return audiovisualContent;
-}
+  }
 }
