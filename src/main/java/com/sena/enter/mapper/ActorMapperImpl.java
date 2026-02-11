@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import com.sena.enter.dto.ActorDTO;
 import com.sena.enter.models.Actor;
 
-
 @Component
 public class ActorMapperImpl implements ActorMapper {
 
@@ -18,7 +17,9 @@ public class ActorMapperImpl implements ActorMapper {
         dto.setId(actor.getId());
         dto.setNameActor(actor.getNactor());
         dto.setLastNameActor(actor.getLnactor());
-        dto.setPicture(actor.getPic());
+        if (actor.getPic() != null) {
+            dto.setPicture(actor.getPic());
+        }
         dto.setPictureContentType(actor.getPiccontenttype());
         return dto;
     }
@@ -33,9 +34,10 @@ public class ActorMapperImpl implements ActorMapper {
         actor.setId(dto.getId());
         actor.setNactor(dto.getNameActor());
         actor.setLnactor(dto.getLastNameActor());
-        actor.setPic(dto.getPicture());
+        if (dto.getPicture() != null) {
+            actor.setPic(dto.getPicture());
+        }
         actor.setPiccontenttype(dto.getPictureContentType());
         return actor;
     }
 }
-

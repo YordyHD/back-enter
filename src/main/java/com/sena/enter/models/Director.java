@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "director")
-public class Director implements Serializable{
+public class Director implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +28,8 @@ public class Director implements Serializable{
     @Column(name = "las_name_director", length = 30)
     private String lNDirector;
 
-    @Lob
-    @Column(name = "picture")
-    private byte[] pic;
+    @Column(name = "picture", columnDefinition = "LONGTEXT")
+    private String picture;
 
     @Column(name = "picture_content_type")
     private String picContentType;

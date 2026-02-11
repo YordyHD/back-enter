@@ -18,7 +18,9 @@ public class DirectorMapperImpl implements DirectorMapper {
         dto.setId(director.getId());
         dto.setNameDirector(director.getNDirector());
         dto.setLasNameDirector(director.getLNDirector());
-        dto.setPicture(director.getPic());
+        if (director.getPicture() != null) {
+            dto.setPicture(director.getPicture());
+        }
         dto.setPictureContentType(director.getPicContentType());
         dto.setYearbirth(director.getYear());
 
@@ -35,7 +37,9 @@ public class DirectorMapperImpl implements DirectorMapper {
         director.setId(dto.getId());
         director.setNDirector(dto.getNameDirector());
         director.setLNDirector(dto.getLasNameDirector());
-        director.setPic(dto.getPicture());
+        if (dto.getPicture() != null) {
+            director.setPicture(dto.getPicture());
+        }
         director.setPicContentType(dto.getPictureContentType());
         director.setYear(dto.getYearbirth());
 

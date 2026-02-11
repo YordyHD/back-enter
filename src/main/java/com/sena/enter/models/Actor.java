@@ -13,7 +13,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
@@ -23,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table (name = "actor")
+@Table(name = "actor")
 public class Actor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +38,8 @@ public class Actor implements Serializable {
     @Column(name = "last_name_actor", length = 30)
     private String lnactor;
 
-    @Lob
-    @Column(name = "picture")
-    private byte[] pic;
+    @Column(name = "picture", columnDefinition = "LONGTEXT")
+    private String pic;
 
     @Column(name = "picture_content_type")
     private String piccontenttype;
