@@ -16,27 +16,21 @@ public class UserDTO implements Serializable {
 
     private Long id;
     private String login;
-    private String firstName;
-    private String lastName;
     private String email;
     private boolean activated;
     private String langKey;
     private String imageUrl;
-    private String password;
     private Set<String> authorities;
 
     public UserDTO(User user) {
         this.id = user.getId();
-        this.login = user.getLog();
-        this.firstName = user.getFName();
-        this.lastName = user.getLName();
-        this.email = user.getEma();
+        this.login = user.getLogin();
+        this.email = user.getEmail();
         this.activated = user.isActivated();
         this.langKey = user.getLangKey();
         this.imageUrl = user.getImageUrl();
         this.authorities = user.getAuthorities().stream()
-            .map(authority -> authority.getName())
-            .collect(java.util.stream.Collectors.toSet());
+                .map(authority -> authority.getName())
+                .collect(java.util.stream.Collectors.toSet());
     }
 }
-

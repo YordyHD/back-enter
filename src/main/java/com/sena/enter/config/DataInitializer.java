@@ -35,13 +35,11 @@ public class DataInitializer implements CommandLineRunner {
         });
 
         // 2. Crear el usuario admin si no existe
-        if (userRepository.findByLog("admin").isEmpty()) {
+        if (userRepository.findOneByLogin("admin").isEmpty()) {
             User adminUser = new User();
-            adminUser.setLog("admin");
-            adminUser.setPassw(passwordEncoder.encode("admin")); // Contraseña: admin
-            adminUser.setFName("Admin");
-            adminUser.setLName("System");
-            adminUser.setEma("admin@localhost");
+            adminUser.setLogin("admin");
+            adminUser.setPassword(passwordEncoder.encode("admin")); // Contraseña: admin
+            adminUser.setEmail("admin@localhost");
             adminUser.setActivated(true);
             adminUser.setLangKey("es");
             adminUser.setAuthorities(Collections.singleton(adminRole));

@@ -13,48 +13,46 @@ public class UserMapperImpl implements UserMapper {
 
     @Override
     public UserDTO toDTO(User user) {
-        if (user == null) return null;
-        if (user.getLog() == null) {
+        if (user == null)
+            return null;
+        if (user.getLogin() == null) {
             throw new IllegalArgumentException("User login cannot be null");
         }
 
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
-        dto.setLogin(user.getLog());
-        dto.setFirstName(user.getFName());
-        dto.setLastName(user.getLName());
-        dto.setEmail(user.getEma());
+        dto.setLogin(user.getLogin());
+        dto.setEmail(user.getEmail());
         dto.setActivated(user.isActivated());
         dto.setLangKey(user.getLangKey());
         dto.setImageUrl(user.getImageUrl());
         dto.setAuthorities(user.getAuthorities().stream()
-            .map(Authority::getName)
-            .collect(java.util.stream.Collectors.toSet()));
+                .map(Authority::getName)
+                .collect(java.util.stream.Collectors.toSet()));
         return dto;
     }
 
     @Override
     public User toUser(UserDTO dto) {
-        if (dto == null) return null;
+        if (dto == null)
+            return null;
 
         User user = new User();
         user.setId(dto.getId());
-        user.setLog(dto.getLogin());
-        user.setFName(dto.getFirstName());
-        user.setLName(dto.getLastName());
-        user.setEma(dto.getEmail());
+        user.setLogin(dto.getLogin());
+        user.setEmail(dto.getEmail());
         user.setActivated(dto.isActivated());
         user.setLangKey(dto.getLangKey());
         user.setImageUrl(dto.getImageUrl());
         Set<Authority> authorities = new HashSet<>();
         if (dto.getAuthorities() != null) {
             authorities = dto.getAuthorities().stream()
-                .map(authorityName -> {
-                    Authority authority = new Authority();
-                    authority.setName(authorityName);
-                    return authority;
-                })
-                .collect(java.util.stream.Collectors.toSet());
+                    .map(authorityName -> {
+                        Authority authority = new Authority();
+                        authority.setName(authorityName);
+                        return authority;
+                    })
+                    .collect(java.util.stream.Collectors.toSet());
         }
         user.setAuthorities(authorities);
         return user;
@@ -62,19 +60,14 @@ public class UserMapperImpl implements UserMapper {
 
     @Override
     public User updateUserFromDto(User userToUpdate, UserDTO dto) {
-        if (userToUpdate == null || dto == null) return userToUpdate;
+        if (userToUpdate == null || dto == null)
+            return userToUpdate;
 
         if (dto.getLogin() != null) {
-            userToUpdate.setLog(dto.getLogin());
-        }
-        if (dto.getFirstName() != null) {
-            userToUpdate.setFName(dto.getFirstName());
-        }
-        if (dto.getLastName() != null) {
-            userToUpdate.setLName(dto.getLastName());
+            userToUpdate.setLogin(dto.getLogin());
         }
         if (dto.getEmail() != null) {
-            userToUpdate.setEma(dto.getEmail());
+            userToUpdate.setEmail(dto.getEmail());
         }
         userToUpdate.setActivated(dto.isActivated());
         if (dto.getLangKey() != null) {
@@ -85,12 +78,12 @@ public class UserMapperImpl implements UserMapper {
         }
         if (dto.getAuthorities() != null) {
             Set<Authority> authorities = dto.getAuthorities().stream()
-                .map(authorityName -> {
-                    Authority authority = new Authority();
-                    authority.setName(authorityName);
-                    return authority;
-                })
-                .collect(java.util.stream.Collectors.toSet());
+                    .map(authorityName -> {
+                        Authority authority = new Authority();
+                        authority.setName(authorityName);
+                        return authority;
+                    })
+                    .collect(java.util.stream.Collectors.toSet());
             userToUpdate.setAuthorities(authorities);
         }
         return userToUpdate;

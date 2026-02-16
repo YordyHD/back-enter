@@ -5,13 +5,13 @@ import com.sena.enter.dto.RespuestaLoginDto;
 import com.sena.enter.models.User;
 
 @Component
-public class AutenticacionMapperImpl implements AutenticacionMapper{
+public class AutenticacionMapperImpl implements AutenticacionMapper {
 
     @Override
-    public RespuestaLoginDto aRespuestaInicioDeSesionDto(User user, String token) {
+    public RespuestaLoginDto aRespuestaInicioDeSesionDto(User user, String token, String fullName) {
         RespuestaLoginDto dto = new RespuestaLoginDto();
         dto.setToken(token);
-        dto.setNombreCompleto(user.getFName() + " " + user.getLName());
+        dto.setNombreCompleto(fullName);
         dto.setRol(user.getAuthorities().stream()
                 .findFirst()
                 .map(auth -> auth.getName())
@@ -19,6 +19,3 @@ public class AutenticacionMapperImpl implements AutenticacionMapper{
         return dto;
     }
 }
-
-
-

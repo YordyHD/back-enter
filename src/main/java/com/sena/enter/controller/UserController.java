@@ -26,24 +26,39 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody com.sena.enter.dto.RegisterDTO registerDTO) {
+        try {
+            UserDTO created = userService.register(registerDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
+                    "mensaje", "Usuario registrado exitosamente",
+                    "data", created));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "error", "Error en el registro",
+                    "detalle", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of(
+                    "error", "No se pudo registrar el usuario",
+                    "detalle", e.getMessage()));
+        }
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
         try {
             UserDTO created = userService.save(userDTO);
             if (created == null) {
                 return ResponseEntity.badRequest().body(Map.of(
-                        "mensaje", "Datos de usuario inválidos"
-                ));
+                        "mensaje", "Datos de usuario inválidos"));
             }
             return ResponseEntity.status(HttpStatus.CREATED).body(Map.of(
                     "mensaje", "Usuario creado exitosamente",
-                    "data", created
-            ));
+                    "data", created));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Map.of(
                     "error", "No se pudo crear el usuario",
-                    "detalle", e.getMessage()
-            ));
+                    "detalle", e.getMessage()));
         }
     }
 
@@ -56,7 +71,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         return userService.findOne(id)
-                .<ResponseEntity<?>>map(ResponseEntity::ok) 
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(Map.of("mensaje", "Usuario no encontrado")));
     }
@@ -64,7 +79,7 @@ public class UserController {
     @GetMapping("/login/{login}")
     public ResponseEntity<?> getUserByLogin(@PathVariable String login) {
         return userService.findByLogin(login)
-                .<ResponseEntity<?>>map(ResponseEntity::ok) 
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(Map.of("mensaje", "Usuario no encontrado")));
     }
@@ -75,8 +90,7 @@ public class UserController {
         return userService.update(userDTO)
                 .<ResponseEntity<?>>map(updated -> ResponseEntity.ok(Map.of(
                         "mensaje", "Usuario actualizado correctamente",
-                        "data", updated
-                )))
+                        "data", updated)))
                 .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(Map.of("mensaje", "No se pudo actualizar el usuario")));
     }
@@ -89,8 +103,7 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Map.of(
                     "error", "No se pudo eliminar el usuario",
-                    "detalle", e.getMessage()
-            ));
+                    "detalle", e.getMessage()));
         }
     }
 
@@ -99,8 +112,7 @@ public class UserController {
         return userService.activateRegistration(key)
                 .<ResponseEntity<?>>map(user -> ResponseEntity.ok(Map.of(
                         "mensaje", "Usuario activado exitosamente",
-                        "data", user
-                )))
+                        "data", user)))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(Map.of("mensaje", "Clave de activación inválida o expirada")));
     }
@@ -124,8 +136,7 @@ public class UserController {
                 // For development, we include the key in the response. Remove in production.
                 return ResponseEntity.ok(Map.of(
                         "mensaje", "Solicitud de restablecimiento creada",
-                        "resetKey", maybeKey.get()
-                ));
+                        "resetKey", maybeKey.get()));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(Map.of("mensaje", "Email no encontrado o usuario no activado"));
@@ -133,32 +144,32 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Map.of(
                     "error", "No se pudo procesar la solicitud",
-                    "detalle", e.getMessage()
-            ));
+                    "detalle", e.getMessage()));
         }
     }
 
-        @GetMapping("/activation-key")
-        public ResponseEntity<?> getActivationKey(@RequestParam String email) {
+    @GetMapping("/activation-key")
+    public ResponseEntity<?> getActivationKey(@RequestParam String email) {
         return userService.getActivationKeyByEmail(email)
-            .<ResponseEntity<?>>map(key -> ResponseEntity.ok(Map.of(
-                "activationKey", key
-            )))
-            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("mensaje", "Email no encontrado o sin clave de activación")));
-        }
+                .<ResponseEntity<?>>map(key -> ResponseEntity.ok(Map.of(
+                        "activationKey", key)))
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Map.of("mensaje", "Email no encontrado o sin clave de activación")));
+    }
 
-        @PostMapping("/{id}/roles")
-        public ResponseEntity<?> addRoleToUser(@PathVariable Long id, @RequestParam String role) {
-            boolean ok = userService.addRoleToUser(id, role);
-            if (ok) return ResponseEntity.ok(Map.of("mensaje", "Rol agregado"));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("mensaje", "Usuario no encontrado"));
-        }
+    @PostMapping("/{id}/roles")
+    public ResponseEntity<?> addRoleToUser(@PathVariable Long id, @RequestParam String role) {
+        boolean ok = userService.addRoleToUser(id, role);
+        if (ok)
+            return ResponseEntity.ok(Map.of("mensaje", "Rol agregado"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("mensaje", "Usuario no encontrado"));
+    }
 
-        @DeleteMapping("/{id}/roles")
-        public ResponseEntity<?> removeRoleFromUser(@PathVariable Long id, @RequestParam String role) {
-            boolean ok = userService.removeRoleFromUser(id, role);
-            if (ok) return ResponseEntity.ok(Map.of("mensaje", "Rol removido"));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("mensaje", "Usuario no encontrado"));
-        }
+    @DeleteMapping("/{id}/roles")
+    public ResponseEntity<?> removeRoleFromUser(@PathVariable Long id, @RequestParam String role) {
+        boolean ok = userService.removeRoleFromUser(id, role);
+        if (ok)
+            return ResponseEntity.ok(Map.of("mensaje", "Rol removido"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("mensaje", "Usuario no encontrado"));
+    }
 }

@@ -6,7 +6,6 @@ import com.sena.enter.dto.CustomerDTO;
 import com.sena.enter.dto.DocumentTypeDTO;
 import com.sena.enter.dto.FilmGenreDTO;
 import com.sena.enter.dto.SexDTO;
-import com.sena.enter.dto.UserDTO;
 import com.sena.enter.dto.CityDTO;
 import com.sena.enter.models.Customer;
 import com.sena.enter.models.DocumentType;
@@ -23,24 +22,34 @@ public class CustomerMapperImpl implements CustomerMapper {
 
     @Override
     public CustomerDTO toDTO(Customer customer) {
-        if (customer == null) return null;
+        if (customer == null)
+            return null;
 
         CustomerDTO dto = new CustomerDTO();
         dto.setId(customer.getId());
-        dto.setDocumentNumber(customer.getDocumentNum());
-        dto.setFirstName(customer.getFName());
-        dto.setSecondName(customer.getSName());
-        dto.setFirstLasName(customer.getFLName());
-        dto.setSecondLastName(customer.getSLName());
+        dto.setDocumentNumber(customer.getDocumentNumber());
+        dto.setFirstName(customer.getFirstName());
+        dto.setSecondName(customer.getSecondName());
+        dto.setFirstLastName(customer.getFirstLastName());
+        dto.setSecondLastName(customer.getSecondLastName());
 
         if (customer.getUser() != null) {
-            dto.setUser(new UserDTO(customer.getUser()));
+            com.sena.enter.dto.UserDTO userDTO = new com.sena.enter.dto.UserDTO();
+            userDTO.setId(customer.getUser().getId());
+            userDTO.setLogin(customer.getUser().getLogin());
+            userDTO.setEmail(customer.getUser().getEmail());
+            userDTO.setActivated(customer.getUser().isActivated());
+            userDTO.setLangKey(customer.getUser().getLangKey());
+            userDTO.setImageUrl(customer.getUser().getImageUrl());
+            // Authorities might be needed
+            dto.setUser(userDTO);
         }
 
         if (customer.getFilmGenres() != null) {
             Set<FilmGenreDTO> fgDtos = new HashSet<>();
             for (FilmGenre fg : customer.getFilmGenres()) {
-                if (fg == null) continue;
+                if (fg == null)
+                    continue;
                 FilmGenreDTO fgDto = new FilmGenreDTO();
                 fgDto.setId(fg.getId());
                 fgDto.setMovieGenre(fg.getMovieGe());
@@ -66,12 +75,12 @@ public class CustomerMapperImpl implements CustomerMapper {
             dto.setSex(sDto);
         }
 
-        if (customer.getCities() != null) {
-            City c = customer.getCities();
+        if (customer.getCity() != null) {
+            City c = customer.getCity();
             CityDTO cDto = new CityDTO();
             cDto.setId(c.getId());
             cDto.setName(c.getN());
-            dto.setCities(cDto);
+            dto.setCity(cDto);
         }
 
         return dto;
@@ -79,15 +88,16 @@ public class CustomerMapperImpl implements CustomerMapper {
 
     @Override
     public Customer toCustomer(CustomerDTO dto) {
-        if (dto == null) return null;
+        if (dto == null)
+            return null;
 
         Customer customer = new Customer();
         customer.setId(dto.getId());
-        customer.setDocumentNum(dto.getDocumentNumber());
-        customer.setFName(dto.getFirstName());
-        customer.setSName(dto.getSecondName());
-        customer.setFLName(dto.getFirstLasName());
-        customer.setSLName(dto.getSecondLastName());
+        customer.setDocumentNumber(dto.getDocumentNumber());
+        customer.setFirstName(dto.getFirstName());
+        customer.setSecondName(dto.getSecondName());
+        customer.setFirstLastName(dto.getFirstLastName());
+        customer.setSecondLastName(dto.getSecondLastName());
 
         if (dto.getUser() != null) {
             User u = new User();
@@ -98,7 +108,8 @@ public class CustomerMapperImpl implements CustomerMapper {
         if (dto.getFilmGenres() != null) {
             Set<FilmGenre> fgs = new HashSet<>();
             for (FilmGenreDTO fgDto : dto.getFilmGenres()) {
-                if (fgDto == null) continue;
+                if (fgDto == null)
+                    continue;
                 FilmGenre fg = new FilmGenre();
                 fg.setId(fgDto.getId());
                 fg.setMovieGe(fgDto.getMovieGenre());
@@ -121,10 +132,10 @@ public class CustomerMapperImpl implements CustomerMapper {
             customer.setSex(s);
         }
 
-        if (dto.getCities() != null) {
+        if (dto.getCity() != null) {
             City c = new City();
-            c.setId(dto.getCities().getId());
-            customer.setCities(c);
+            c.setId(dto.getCity().getId());
+            customer.setCity(c);
         }
 
         return customer;

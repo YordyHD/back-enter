@@ -6,8 +6,10 @@ import java.util.Optional;
 import com.sena.enter.dto.UserDTO;
 
 public interface UserService {
-    
+
     UserDTO save(UserDTO userDTO);
+
+    UserDTO register(com.sena.enter.dto.RegisterDTO registerDTO);
 
     Optional<UserDTO> update(UserDTO userDTO);
 

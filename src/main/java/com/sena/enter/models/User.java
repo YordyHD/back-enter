@@ -8,7 +8,6 @@ import java.util.Set;
 import org.hibernate.annotations.BatchSize;
 import com.sena.enter.config.Constant;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -32,7 +31,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "ender_user")
-public class User implements Serializable{
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,26 +41,18 @@ public class User implements Serializable{
     @Pattern(regexp = Constant.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     @Column(length = 50, unique = true, nullable = false)
-    private String log;
+    private String login;
 
     @JsonIgnore
     @NotNull
     @Size(min = 60, max = 60)
     @Column(name = "password_hash", length = 60, nullable = false)
-    private String passw;
-
-    @Size(max = 50)
-    @Column(name = "first_name", length = 50)
-    private String fName;
-
-    @Size(max = 50)
-    @Column(name = "last_name", length = 50)
-    private String lName;
+    private String password;
 
     @Email
     @Size(min = 5, max = 254)
     @Column(length = 254, unique = true)
-    private String ema;
+    private String email;
 
     @NotNull
     @Column(nullable = false)
@@ -90,11 +81,9 @@ public class User implements Serializable{
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(
-        name = "ender_user_authority",
-        joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
-        inverseJoinColumns = { @JoinColumn(name = "authority_name", referencedColumnName = "name") }
-    )
+    @JoinTable(name = "ender_user_authority", joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+                    @JoinColumn(name = "authority_name", referencedColumnName = "name") })
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 }

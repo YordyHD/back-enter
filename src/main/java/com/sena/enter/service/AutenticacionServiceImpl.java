@@ -14,16 +14,19 @@ import com.sena.enter.repository.UserRepository;
 public class AutenticacionServiceImpl implements AutenticacionService {
 
     private final UserRepository userRepository;
+    private final com.sena.enter.repository.CustomerRepository customerRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AutenticacionMapper autenticacionMapper;
 
     public AutenticacionServiceImpl(
             UserRepository userRepository,
+            com.sena.enter.repository.CustomerRepository customerRepository,
             JwtService jwtService,
             PasswordEncoder passwordEncoder,
             AutenticacionMapper autenticacionMapper) {
         this.userRepository = userRepository;
+        this.customerRepository = customerRepository;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
         this.autenticacionMapper = autenticacionMapper;
@@ -31,15 +34,19 @@ public class AutenticacionServiceImpl implements AutenticacionService {
 
     @Override
     public RespuestaLoginDto iniciarSesion(LoginDto login) {
-        User user = userRepository.findByLog(login.getUsername())
+        User user = userRepository.findOneByLogin(login.getUsername())
                 .orElseThrow(() -> new CredencialesInvalidasException("Usuario no encontrado"));
 
-        if (!passwordEncoder.matches(login.getPassword(), user.getPassw())) {
+        if (!passwordEncoder.matches(login.getPassword(), user.getPassword())) {
             throw new CredencialesInvalidasException("Contraseña incorrecta");
         }
 
-        String token = jwtService.generarToken(user);
+        String fullName = customerRepository.findByUser(user)
+                .map(c -> c.getFirstName() + (c.getFirstLastName() != null ? " " + c.getFirstLastName() : ""))
+                .orElse(user.getLogin());
 
-        return autenticacionMapper.aRespuestaInicioDeSesionDto(user, token);
+        String token = jwtService.generarToken(user, fullName);
+
+        return autenticacionMapper.aRespuestaInicioDeSesionDto(user, token, fullName);
     }
 }

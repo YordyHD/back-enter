@@ -12,12 +12,11 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @Entity
 @Table(name = "customer")
-public class Customer implements Serializable{
+public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -26,25 +25,25 @@ public class Customer implements Serializable{
     @NotNull
     @Size(max = 50)
     @Column(name = "document_number", length = 50, nullable = false)
-    private String documentNum;
+    private String documentNumber;
 
     @NotNull
     @Size(max = 50)
     @Column(name = "first_name", length = 50, nullable = false)
-    private String fName;
+    private String firstName;
 
     @Size(max = 50)
     @Column(name = "second_name", length = 50)
-    private String sName;
+    private String secondName;
 
     @NotNull
     @Size(max = 50)
-    @Column(name = "first_las_name", length = 50, nullable = false)
-    private String fLName;
+    @Column(name = "first_last_name", length = 50, nullable = false)
+    private String firstLastName;
 
     @Size(max = 50)
     @Column(name = "second_last_name", length = 50)
-    private String sLName;
+    private String secondLastName;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
@@ -61,11 +60,7 @@ public class Customer implements Serializable{
 
     @ManyToMany(fetch = FetchType.LAZY)
     @NotNull
-    @JoinTable(
-        name = "rel_customer__film_genre",
-        joinColumns = @JoinColumn(name = "customer_id"),
-        inverseJoinColumns = @JoinColumn(name = "film_genre_id")
-    )
+    @JoinTable(name = "customer_film_genre", joinColumns = @JoinColumn(name = "customer_id"), inverseJoinColumns = @JoinColumn(name = "film_genre_id"))
     @JsonIgnoreProperties(value = { "audiovisualContents", "customers" }, allowSetters = true)
     private Set<FilmGenre> filmGenres = new HashSet<>();
 
@@ -82,5 +77,5 @@ public class Customer implements Serializable{
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "customers", "departament" }, allowSetters = true)
-    private City cities;
+    private City city;
 }

@@ -1,22 +1,29 @@
 package com.sena.enter.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+public class RegisterDTO implements Serializable {
 
-public class CustomerDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    private Long id;
+    @NotNull
+    @Size(min = 1, max = 50)
+    private String username;
+
+    @Email
+    @Size(min = 5, max = 254)
+    @NotNull
+    private String email;
+
+    @NotNull
+    @Size(min = 4, max = 100)
+    private String password;
 
     @NotNull
     @Size(max = 50)
@@ -37,17 +44,11 @@ public class CustomerDTO implements Serializable {
     private String secondLastName;
 
     @NotNull
-    private UserDTO user;
+    private Long documentTypeId;
 
     @NotNull
-    private Set<FilmGenreDTO> filmGenres = new HashSet<>();
+    private Long sexId;
 
     @NotNull
-    private DocumentTypeDTO documentType;
-
-    @NotNull
-    private SexDTO sex;
-
-    @NotNull
-    private CityDTO city;
+    private Long cityId;
 }

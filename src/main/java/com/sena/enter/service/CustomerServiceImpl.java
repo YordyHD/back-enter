@@ -62,15 +62,15 @@ public class CustomerServiceImpl implements CustomerService {
             return null;
         }
         return customerRepository.findById(id)
-            .map(customerMapper::toDTO)
-            .orElse(null);
+                .map(customerMapper::toDTO)
+                .orElse(null);
     }
 
     @Override
     public List<CustomerDTO> findAll() {
         return customerRepository.findAll().stream()
-            .map(customerMapper::toDTO)
-            .collect(Collectors.toList());
+                .map(customerMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -83,11 +83,11 @@ public class CustomerServiceImpl implements CustomerService {
     private boolean isValidCustomer(CustomerDTO customerDTO) {
         return customerDTO.getDocumentNumber() != null &&
                 customerDTO.getFirstName() != null &&
-                customerDTO.getFirstLasName() != null &&
+                customerDTO.getFirstLastName() != null &&
                 customerDTO.getUser() != null &&
                 customerDTO.getDocumentType() != null &&
                 customerDTO.getSex() != null &&
-                customerDTO.getCities() != null &&
+                customerDTO.getCity() != null &&
                 customerDTO.getFilmGenres() != null;
     }
 }

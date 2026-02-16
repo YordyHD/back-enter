@@ -22,18 +22,18 @@ public class JwtService {
 
     private final long EXPIRACION = 3600000;
 
-    public String generarToken(User user) {
+    public String generarToken(User user, String fullName) {
         return Jwts.builder()
-                .setSubject(user.getLog()) 
+                .setSubject(user.getLogin())
                 .claim("id", user.getId())
-                .claim("nombreCompleto", user.getFName() + " " + user.getLName())
+                .claim("nombreCompleto", fullName)
                 .claim("rol", user.getAuthorities().stream()
                         .findFirst()
                         .map(auth -> auth.getName())
                         .orElse("USER"))
-                .setIssuedAt(new Date()) 
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRACION)) 
-                .signWith(claveSecreta(), SignatureAlgorithm.HS256) 
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRACION))
+                .signWith(claveSecreta(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -47,7 +47,7 @@ public class JwtService {
     }
 
     public boolean esTokenValido(String token, User user) {
-        return obtenerUsuario(token).equals(user.getLog()) && !estaExpirado(token);
+        return obtenerUsuario(token).equals(user.getLogin()) && !estaExpirado(token);
     }
 
     private boolean estaExpirado(String token) {
