@@ -2,6 +2,7 @@ package com.sena.enter.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
@@ -53,12 +54,18 @@ public class SecurityConfig {
                                 "/api/document-types/findAll",
                                 "/api/sex/findAll",
                                 "/api/membreships/**",
+                                "/api/audiovisual/findAll",
+                                "/api/actor-audiovisual/findAll",
+                                "/api/directors/findAll",
+                                "/api/film-genres/findAll",
+                                "/api/actors/findAll",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-resources/**",
                                 "/api-docs/**")
                         .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/audiovisual/*").permitAll()
                         .requestMatchers("/api/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated());
 
